@@ -1,42 +1,39 @@
 #include <iostream>
-using namespace std;
-
-class Vehicle
-{
+class Shape {
 public:
-    virtual void move() const
-    {
-        cout << "Vehicle is moving\n";
-    }
-
-    virtual ~Vehicle() = default;
+ virtual double area() const {
+ return 0.0;
+ }
+ virtual ~Shape() = default;
 };
-
-class Car : public Vehicle
-{
+class Rectangle : public Shape {
+private:
+ double length;
+ double width;
 public:
-    void move() const override
-    {
-        cout << "Car moves on roads\n";
-    }
+ Rectangle(double givenLength, double givenWidth)
+ : length(givenLength), width(givenWidth) {}
+ double area() const override {
+ return length * width;
+ }
 };
-
-class Boat : public Vehicle
-{
+class Circle : public Shape {
+private:
+ double radius;
 public:
-    void move() const override
-    {
-        cout << "Boat moves on water\n";
-    }
+ explicit Circle(double givenRadius) : radius(givenRadius) {}
+ double area() const override {
+ constexpr double PI = 3.141592653589793;
+ return PI * radius * radius;
+ }
 };
-
-int main()
-{
-    Car car;
-    Boat boat;
-
-    car.move();
-    boat.move();
-
-    return 0;
+void printArea(const Shape& shape) {
+ std::cout << "Area: " << shape.area() << '\n';
+}
+int main() {
+ Rectangle rectangle(5.0, 3.0);
+ Circle circle(2.0);
+ printArea(rectangle);
+ printArea(circle);
+ return 0;
 }
